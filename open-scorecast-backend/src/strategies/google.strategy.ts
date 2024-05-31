@@ -5,7 +5,7 @@ import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor(/* private authService: AuthService */) {
+  constructor(private authService: AuthService) {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET_ID,
@@ -14,11 +14,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     });
   }
 
-  async validate(accessToken: string, refreshToken: string, profile: any): Promise<any> {
+  async validate(accessToken: string, refreshToken: string, profile: any, done: VerifyCallback): Promise<any> {
     /* const user = await this.authService.findOrCreateUser(profile.id, 'google', accessToken, refreshToken, new Date());
     done(null, user); */
-    console.log(accessToken);
-    console.log(refreshToken);
-    console.log(profile);
   }
 }
