@@ -21,9 +21,6 @@ export class User {
   oauth_provider_id: string;
 
   @Column('text', { nullable: true })
-  oauth_access_token: string;
-
-  @Column('text', { nullable: true })
   oauth_refresh_token: string;
 
   @Column('text', { nullable: true })
