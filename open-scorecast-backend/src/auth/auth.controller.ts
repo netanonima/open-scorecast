@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Req, Request, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from 'src/guards/local-auth.guard';
+import { Request, Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -9,7 +10,7 @@ export class AuthController {
 
   @Post('login')
   @UseGuards(LocalAuthGuard)
-  login(@Request() req) {
+  login(@Req() req: Request) {
     return this.authService.login(req.user);
   }
 
@@ -21,7 +22,8 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  async googleCallback(@Req() req) {
-    return { access_token: req.user.jwt };
+  async googleCallback(@Req() req: Request, @Res() res: Response) {
+    let jwt: string = req.user['access_token'];
+    res.redirect(`${process.env.CLIENT_URL}?access-token=${jwt}`);
   }
 }

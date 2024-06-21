@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -22,9 +23,13 @@ export class UserService {
       where: { email: email },
     });
 
-    if (!user) throw new NotFoundException(`User not found`);
-
     return user;
+  }
+
+  async create(createUserDto: CreateUserDto) {
+    const newUser = this.userRepository.create(createUserDto);
+
+    return this.userRepository.save(newUser);
   }
 
   /**

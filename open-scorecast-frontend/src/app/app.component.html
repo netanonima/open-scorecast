@@ -226,7 +226,23 @@
         </defs>
       </svg>
       <h1>Hello, {{ title }}</h1>
-      <p>Congratulations! Your app is running. 🎉</p>
+      <div id="g_id_onload"
+        data-client_id="350049309614-79annq956rv646nu7ijo829bjns1iga4.apps.googleusercontent.com">
+      </div>
+      <div class="g_id_signin"
+        data-type="standard"
+        data-size="medium"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="pill"
+        data-logo_alignment="left">
+      </div>
+
+      @if (accessToken !== '') {
+        <p>Successfully logged in using Google OAuth2</p>
+        <p>JWT token:</p>
+        <p [style]="{'width': '520px', 'overflow-wrap': 'break-word'}">{{ accessToken }}</p>
+      }
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
